@@ -72,8 +72,6 @@ contract HelperConfig is CodeConstants, Script {
 
         vm.startBroadcast();
 
-        // MATCHES YOUR CONSTRUCTOR EXACTLY:
-        // constructor(uint96 _baseFee, uint96 _gasPrice, int256 _weiPerUnitLink)
         VRFCoordinatorV2_5Mock vrfMock = new VRFCoordinatorV2_5Mock(
             MOCK_BASE_FEE,
             MOCK_GAS_PRICE_LINK,
