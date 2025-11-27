@@ -1,0 +1,5 @@
+RaffleTest:testCheckUpKeepReturnsFalseIfItHasNoBalance() (gas: 20838)
+RaffleTest:testRaffleInitialization() (gas: 8077)
+RaffleTest:testRaffleRecordWhenSomeoneEnter() (gas: 69533)
+RaffleTest:testRaffleRevertWhenYouDontPayEnough() (gas: 11232)
+RaffleTest:test_enterRaffleEventEmits() (gas: 69482)
