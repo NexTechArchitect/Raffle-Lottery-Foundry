@@ -1,66 +1,89 @@
-## Foundry
+Raffle Lottery – Smart Contract (Foundry)
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+This project implements a decentralized automated raffle (lottery) system on Ethereum-compatible blockchains. The contract allows participants to enter by paying an entrance fee, and a winner is selected automatically at fixed time intervals using Chainlink VRF for secure randomness and Chainlink Automation for upkeep checks.
 
-Foundry consists of:
+Key Features.
 
-- **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
-- **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
-- **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
-- **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+Automated winner selection using Chainlink Automation
 
-## Documentation
+Provably fair randomness through Chainlink VRF
 
-https://book.getfoundry.sh/
+Configurable entrance fee and time intervals
 
-## Usage
+Secure design following best practices (checks-effects-interactions pattern, custom errors, events, etc.)
 
-### Build
+Fully testable using Foundry (unit tests + fuzz tests)
 
-```shell
-$ forge build
-```
+Modular script system for deployment, interactions, and configuration
 
-### Test
+Environment-aware configuration (local, testnet, mainnet)
 
-```shell
-$ forge test
-```
 
-### Format
+Smart Contracts Overview.
 
-```shell
-$ forge fmt
-```
+Raffle.sol
 
-### Gas Snapshots
+Core lottery contract:
 
-```shell
-$ forge snapshot
-```
+Allows players to enter the raffle
 
-### Anvil
+Tracks player list, entrance fee, and raffle state
 
-```shell
-$ anvil
-```
+Requests randomness and picks a winner
 
-### Deploy
+Automatically resets for the next round
 
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
 
-### Cast
+HelperConfig.s.sol
 
-```shell
-$ cast <subcommand>
-```
+Network configuration:
 
-### Help
+Stores settings (vrfCoordinator, subscriptionId, gasLane, callbackGasLimit, interval, etc.)
 
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+Provides different configs for local Anvil vs testnets
+
+
+DeployRaffle.s.sol
+
+Deployment script:
+
+Deploys the Raffle contract
+
+Sets correct configuration depending on the active network
+
+
+Interaction.s.sol
+
+Utility script:
+
+Creates and funds VRF subscription
+
+Adds Raffle contract as a VRF consumer
+
+Manual triggers for keeper/check functions (for testing)
+
+
+Tech Stack
+
+Solidity 0.8.x
+
+Foundry (forge, cast, anvil)
+
+Chainlink VRF & Automation
+
+OpenZeppelin Contracts
+
+
+Testing
+
+The project includes a complete Foundry test suite:
+
+Unit tests for each function
+
+Event testing
+
+State transitions
+
+Time-based behavior
+
+VRF and Automation mock testing
