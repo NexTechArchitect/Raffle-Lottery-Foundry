@@ -146,7 +146,7 @@ contract Raffle is VRFConsumerBaseV2Plus {
 
         s_raffleState = RaffleState.OPEN;
 
-        delete s_players; // 🔥 FINAL FIX — ARRAY RESET PROPERLY
+        delete s_players;
 
         s_lastTimeStamp = block.timestamp;
 
