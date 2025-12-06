@@ -1,89 +1,179 @@
-Raffle Lottery – Smart Contract (Foundry)
+Raffle Lottery – Decentralized Automated Raffle (Foundry)
 
-This project implements a decentralized automated raffle (lottery) system on Ethereum-compatible blockchains. The contract allows participants to enter by paying an entrance fee, and a winner is selected automatically at fixed time intervals using Chainlink VRF for secure randomness and Chainlink Automation for upkeep checks.
+This repository contains an automated decentralized lottery (raffle) smart contract built with Solidity and Foundry. The system enables participants to enter by paying an entrance fee, and automatically selects and rewards a winner at predefined intervals. Winner selection is powered by Chainlink VRF for verifiable randomness, and uptime reliability is achieved using Chainlink Automation.
 
-Key Features.
+The project emphasizes correctness, security, testability, modularity, maintainability, and environment-aware deployments.
 
-Automated winner selection using Chainlink Automation
+Architectural Overview
 
-Provably fair randomness through Chainlink VRF
+The contract suite integrates:
 
-Configurable entrance fee and time intervals
+User Interaction Layer
 
-Secure design following best practices (checks-effects-interactions pattern, custom errors, events, etc.)
+Users enter the raffle by paying the configured entrance fee.
 
-Fully testable using Foundry (unit tests + fuzz tests)
+Entries are recorded securely until the next winner is drawn.
 
-Modular script system for deployment, interactions, and configuration
+Automation Layer
 
-Environment-aware configuration (local, testnet, mainnet)
+Chainlink Automation regularly calls upkeep to determine if a draw must occur.
 
+The contract autonomously transitions between entry and draw phases.
 
-Smart Contracts Overview.
+Randomness Layer
 
-Raffle.sol
+Chainlink VRF provides unbiased randomness.
 
-Core lottery contract:
+Randomness is external, verifiable, and non-manipulable.
 
-Allows players to enter the raffle
+Lifecycle Management
 
-Tracks player list, entrance fee, and raffle state
+After winner selection, the raffle resets and becomes ready for the next round.
 
-Requests randomness and picks a winner
+Contract states ensure there is never overlap between drawing and entering.
 
-Automatically resets for the next round
+Key Features
 
+Automated winner selection through Chainlink Automation
 
-HelperConfig.s.sol
+Cryptographically secure winner randomness via Chainlink VRF
 
-Network configuration:
+State machine architecture to prevent inconsistent transitions
 
-Stores settings (vrfCoordinator, subscriptionId, gasLane, callbackGasLimit, interval, etc.)
+Configurable parameters (entrance fee, time interval, callback gas limits, etc.)
 
-Provides different configs for local Anvil vs testnets
+Deployment and maintenance scripts supporting multiple networks
 
+Comprehensive Foundry test suite covering edge cases and invariants
 
-DeployRaffle.s.sol
+Event-driven transparency for external observers or indexing
 
-Deployment script:
+Uses recommended Solidity defensive programming patterns
 
-Deploys the Raffle contract
+Compatible with Ethereum, L2s, and local development environments
 
-Sets correct configuration depending on the active network
+Smart Contract Modules
+1. Raffle.sol
 
+Core raffle logic:
 
-Interaction.s.sol
+Stores participant list
 
-Utility script:
+Accepts entries by enforcing entrance fee
 
-Creates and funds VRF subscription
+Tracks raffle state (OPEN, CALCULATING)
 
-Adds Raffle contract as a VRF consumer
+Runs periodic checks and automated state transitions
 
-Manual triggers for keeper/check functions (for testing)
+Requests randomness from VRF and selects a winner
 
+Emits events for indexing or off-chain analytics
 
-Tech Stack
+2. HelperConfig.s.sol
 
-Solidity 0.8.x
+Network configuration abstraction:
+
+Provides network-specific configuration parameters
+
+Enables uniform deployment logic across Anvil, Sepolia, Mainnet, etc.
+
+Centralizes coordinator addresses, subscription IDs, gas lanes, and callback limits
+
+3. DeployRaffle.s.sol
+
+Deployment entrypoint:
+
+Deploys the Raffle contract with settings derived from HelperConfig
+
+Prevents hardcoded values and minimizes deployment errors
+
+4. Interaction.s.sol
+
+Automation and VRF subscription utility:
+
+Creates and funds VRF subscription on supported networks
+
+Registers Raffle as VRF consumer
+
+Provides manual upkeep/fulfillment triggers for local or test simulations
+
+Security Considerations
+
+Follows Checks-Effects-Interactions (CEI) pattern
+
+Uses custom errors for gas-efficient revert reasons
+
+Ensures state transitions are atomic, preventing re-entry into inconsistent phases
+
+Avoids storage manipulation during draw execution
+
+Leverages Chainlink infrastructure to eliminate randomness manipulation
+
+Event logging provides clear traceability for auditability
+
+Testing Approach
+
+A full Foundry test suite is provided, including:
+
+Unit tests for core functions
+
+State transition tests across all raffle phases
+
+VRF randomness simulation using mocks
+
+Automation upkeep condition tests
+
+Fuzz testing for edge behaviors
+
+Event emission validation
+
+Comprehensive assertions on invariants
+
+Tests ensure behavioral correctness across local and remote environments.
+
+Tooling and Dependencies
+
+Solidity ^0.8.x
 
 Foundry (forge, cast, anvil)
 
-Chainlink VRF & Automation
+Chainlink VRF v2 and Automation
 
-OpenZeppelin Contracts
+OpenZeppelin utilities
 
+Custom deployment and maintenance scripts
 
-Testing
+Development Workflow
 
-The project includes a complete Foundry test suite:
+Configure environment using HelperConfig.s.sol
 
-Unit tests for each function
+Deploy with DeployRaffle.s.sol
 
-Event testing
+Create and register VRF subscription (if on a live testnet or mainnet)
 
-State transitions
+Execute upkeep (local manual simulation or automated on live networks)
 
-Time-based behavior
+Interact via Foundry scripts, cast, or external UI
 
-VRF and Automation mock testing
+Use Cases
+
+Fair lotteries
+
+Weekly prize draws
+
+Raffle-based NFT mints
+
+Ticket-based selection mechanisms
+
+DAO reward distribution
+
+Community incentive systems
+
+License
+
+MIT License
+
+Author
+
+NexTechArchitect
+Smart Contract Development, Solidity, Foundry, Web3 Engineering
