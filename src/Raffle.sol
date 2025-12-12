@@ -26,7 +26,7 @@ import {VRFV2PlusClient} from "chainlink-brownie-contracts/contracts/src/v0.8/vr
 
 /**
  * @title A simple Raffle contract
- * @author Amit
+ * @author NexTechArchitect
  * @notice This contract is for creating a sample raffle (for good portfolio)
  * @dev Implements Chainlink VRFv2.5
  */
@@ -40,11 +40,12 @@ contract Raffle is VRFConsumerBaseV2Plus {
         uint256 raffleState
     );
 
-    /**Type Declaration */
+
     enum RaffleState {
         OPEN,
         CALCULATING
     }
+
 
     uint16 private constant REQUEST_CONFIRMATIONS = 3;
     uint32 private constant NUM_WORDS = 1;
@@ -52,15 +53,16 @@ contract Raffle is VRFConsumerBaseV2Plus {
     uint256 private immutable i_entranceFee;
     bytes32 private immutable i_keyHash;
     uint256 private immutable i_subscriptionId;
-    uint32 private immutable i_callbackGasLimit;
+    uint32  private immutable i_callbackGasLimit;
     uint256 private immutable i_interval;
 
     address payable[] private s_players;
-    uint256 private s_lastTimeStamp;
-    address private s_recentWinner;
-    RaffleState private s_raffleState;
+              uint256 private s_lastTimeStamp;
+              address private s_recentWinner;
+          RaffleState private s_raffleState;
 
     /**Events */
+
     event RaffleEntered(address indexed player);
     event WinnerPicked(address indexed winner);
 
@@ -95,7 +97,8 @@ contract Raffle is VRFConsumerBaseV2Plus {
         emit RaffleEntered(msg.sender);
     }
 
-    //when should the winner be picked?
+
+
     function checkUpKeep(
         bytes memory /*checkData*/
     ) public view returns (bool upKeepNeeded, bytes memory /*checkdata*/) {
