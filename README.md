@@ -8,8 +8,6 @@
     <a href="https://github.com/NexTechArchitect/Raffle-Lottery-Foundry">
       <img src="https://img.shields.io/badge/Stack-Solidity_%7C_Foundry-363636?style=for-the-badge&logo=solidity&logoColor=white" />
     </a>
-    <img src="https://img.shields.io/badge/Randomness-Chainlink_VRF-375BD2?style=for-the-badge&logo=chainlink&logoColor=white" />
-    <img src="https://img.shields.io/badge/Automation-Chainlink_Keepers-375BD2?style=for-the-badge&logo=chainlink&logoColor=white" />
     <img src="https://img.shields.io/badge/Security-Checks--Effects--Interactions-2ea44f?style=for-the-badge&logo=security-scorecard&logoColor=white" />
     <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" />
   </p>
