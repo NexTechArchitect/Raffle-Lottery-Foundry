@@ -173,7 +173,6 @@ This project utilizes a **Makefile** to streamline the development process. Inst
 | **`make deploy`** | Deploys the contract to the configured network (Sepolia/Anvil). |
 | **`make anvil`** | Starts a local blockchain node for testing. |
 
-> *Ensure your `.env` file is configured with `SEPOLIA_RPC_URL` and `PRIVATE_KEY` before deploying to a live network.*
 
 ---
 
