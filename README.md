@@ -1,72 +1,93 @@
 
 <div align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=600&size=28&pause=1000&color=007AFF&center=true&vCenter=true&width=1000&height=100&lines=Raffle+Lottery+System;Decentralized+%26+Automated;Powered+by+Chainlink+VRF+%26+Automation;Verifiably+Fair+Gaming" alt="Typing Effect" />
 
-  <br/>
+  <br />
+  <br />
+
+  <img src="https://img.icons8.com/ios-filled/100/9d4edd/dice.png" alt="Raffle Logo" />
+
+  <h1 style="font-size: 3rem; margin-bottom: 0;">Automated Provably Fair Raffle</h1>
+
+  <p style="font-size: 1.1rem; color: #b298dc; max-width: 600px;">
+    <strong>A decentralized, autonomous gaming protocol secured by Cryptographic Randomness.</strong><br/>
+    Powered by Chainlink VRF for fairness and Chainlink Automation for self-execution.
+  </p>
 
   <p>
     <a href="https://github.com/NexTechArchitect/Raffle-Lottery-Foundry">
-      <img src="https://img.shields.io/badge/Stack-Solidity_%7C_Foundry-363636?style=for-the-badge&logo=solidity&logoColor=white" />
+      <img src="https://img.shields.io/badge/Solidity-0.8.20-2e2e2e?style=for-the-badge&logo=solidity&logoColor=white" />
     </a>
-    <img src="https://img.shields.io/badge/Security-Checks--Effects--Interactions-2ea44f?style=for-the-badge&logo=security-scorecard&logoColor=white" />
+    &nbsp;
+    <a href="https://github.com/NexTechArchitect/Raffle-Lottery-Foundry">
+      <img src="https://img.shields.io/badge/Framework-Foundry-9d4edd?style=for-the-badge&logo=rust&logoColor=white" />
+    </a>
+    &nbsp;
+    <a href="https://chain.link/vrf">
+      <img src="https://img.shields.io/badge/Service-Chainlink_VRF-2e2e2e?style=for-the-badge&logo=chainlink&logoColor=white" />
+    </a>
   </p>
 
-  <h3>🎲 A Decentralized, Automated, and Verifiably Fair Lottery</h3>
-  <p width="80%">
-    <b>An autonomous smart contract system that selects winners using cryptographic randomness.</b><br/>
-    Self-executing maintenance via Chainlink Automation ensures the lottery runs without human intervention.
-  </p>
-
-  <br/>
-
-  <h3>📚 Topic Navigation</h3>
-  <p>
-    <a href="#-system-architecture"><strong>🏗 Architecture</strong></a> &nbsp;|&nbsp;
-    <a href="#-core-logic--modules"><strong>⚙️ Modules</strong></a> &nbsp;|&nbsp;
-    <a href="#-key-features"><strong>💎 Features</strong></a> &nbsp;|&nbsp;
-    <a href="#-testing--security"><strong>🛡 Security</strong></a> &nbsp;|&nbsp;
-    <a href="#-development-workflow"><strong>🛠 Workflow</strong></a>
-  </p>
+  <br />
 
 </div>
 
 ---
 
-## 📖 Executive Summary
+## 📑 Table of Contents
 
-The **Raffle Lottery** is a robust smart contract system designed to eliminate trust from online gaming. Unlike traditional lotteries where the "house" controls the draw, this protocol is:
-
-1.  **Immutable:** The rules are written in code and cannot be changed.
-2.  **Automated:** Chainlink Automation triggers the draw automatically when the time interval passes.
-3.  **Provably Fair:** The winner is selected using **Chainlink VRF (Verifiable Random Function)**, making it mathematically impossible to manipulate the outcome.
+- [🧠 Executive Summary](#-executive-summary)
+- [🏗️ System Architecture](#-system-architecture)
+- [⚙️ Core Logic & Modules](#-core-logic--modules)
+- [💎 Key Features](#-key-features)
+- [🛡️ Security & Testing](#-security--testing)
+- [🚀 Usage & Workflow](#-usage--workflow)
+- [💡 Use Cases](#-use-cases)
 
 ---
 
-## 🏗 System Architecture
+## 🧠 Executive Summary
 
-The system operates as a **State Machine** (Open $\rightarrow$ Calculating $\rightarrow$ Open), ensuring atomic transitions between entry periods and winner selection.
+The **Raffle Protocol** is a robust smart contract system designed to eliminate trust from online gaming. Unlike traditional lotteries where the "house" controls the draw and holds custody of funds, this protocol is:
 
-### 📐 Logic Flow Diagram
+1.  **Immutable:** The rules are codified on-chain and cannot be altered by an admin.
+2.  **Autonomous:** Chainlink Automation triggers the draw based on time intervals, removing manual intervention.
+3.  **Provably Fair:** Winners are selected using **Verifiable Random Functions (VRF)**, making the outcome mathematically tamper-proof.
+
+---
+
+## 🏗️ System Architecture
+
+The system operates as a finite **State Machine** (`OPEN` $\rightarrow$ `CALCULATING` $\rightarrow$ `OPEN`), ensuring atomic transitions and preventing new entries during the critical random number generation phase.
+
+
+
+[Image of System Architecture Diagram]
+
 
 ```mermaid
 graph TD
-    User((User))
-    Automation{Chainlink Automation}
-    VRF{Chainlink VRF}
+    User((👤 User))
+    Automation{🤖 Chainlink Automation}
+    VRF{🎲 Chainlink VRF}
     
-    subgraph "Raffle Contract"
+    subgraph "Raffle Protocol"
         State[State: OPEN]
         Check[checkUpkeep]
         Perform[performUpkeep]
         Fulfill[fulfillRandomWords]
     end
 
-    User -- 1. Enter Raffle (Pay Fee) --> State
-    Automation -- 2. Check Time Passed? --> Check
+    User -- 1. Enter Raffle (ETH) --> State
+    Automation -- 2. Trigger Time Check --> Check
     Check -- True --> Perform
     Perform -- 3. Request Randomness --> VRF
-    VRF -- 4. Return Random Number --> Fulfill
-    Fulfill -- 5. Pick Winner & Pay --> User
+    VRF -- 4. Return Random Words --> Fulfill
+    Fulfill -- 5. Pick Winner & Payout --> User
+    
+    style User fill:#1a1a1a,stroke:#b298dc
+    style Automation fill:#1a1a1a,stroke:#fff
+    style VRF fill:#1a1a1a,stroke:#9d4edd
+    style State fill:#2d1b4e,stroke:#9d4edd,stroke-width:2px
 
 ```
 
@@ -74,29 +95,26 @@ graph TD
 
 ## ⚙️ Core Logic & Modules
 
-The repository is structured for modularity and environment-agnostic deployment.
-
-### 📂 File Structure
+The repository is structured for modularity and environment-agnostic deployment (Local vs Testnet).
 
 ```text
-Raffle-Lottery-Foundry/
-├── src/
-│   └── Raffle.sol                // [CORE] Main Lottery Logic & State Machine
-├── script/
-│   ├── DeployRaffle.s.sol        // [OPS] Deployment with Config Injection
-│   ├── HelperConfig.s.sol        // [CONF] Multi-chain Config (Sepolia/Mainnet/Anvil)
-│   └── Interactions.s.sol        // [UTILS] Programmatic Subscription Management
-└── test/
-    ├── unit/                     // Isolated State Tests
-    └── fuzz/                     // Stateless Edge-Case Testing
+src/
+├── Raffle.sol              // [CORE] Main Lottery Logic & State Machine
+script/
+├── DeployRaffle.s.sol      // [OPS] Deployment with Config Injection
+├── HelperConfig.s.sol      // [CONF] Multi-chain Config (Sepolia/Anvil)
+└── Interactions.s.sol      // [UTILS] Subscription Management
+test/
+├── unit/                   // Isolated State Tests
+└── fuzz/                   // Stateless Edge-Case Testing
 
 ```
 
-### 🧩 Module Breakdown
+### Module Responsibility
 
-| **Module** | **Responsibility** |
+| Module | Responsibility |
 | --- | --- |
-| **`Raffle.sol`** | Manages player arrays, enforces entrance fees, tracks state (`OPEN`, `CALCULATING`), and processes payouts. |
+| **`Raffle.sol`** | Manages player arrays, enforces entrance fees, tracks state, and processes atomic payouts. |
 | **`HelperConfig`** | Abstracts network details. Automatically switches between local mocks (Anvil) and live addresses (Sepolia). |
 | **`Interactions`** | Handles the heavy lifting of creating VRF Subscriptions and funding consumers programmatically. |
 
@@ -110,14 +128,14 @@ Raffle-Lottery-Foundry/
 <h3>🤖 Automation Layer</h3>
 <ul>
 <li><b>Self-Sustaining:</b> No admin required to start/end rounds.</li>
-<li><b>Time-Based Triggers:</b> Uses `checkUpkeep` to efficiently validate if a draw is needed off-chain before executing on-chain.</li>
+<li><b>Gas Optimized:</b> Uses `checkUpkeep` (view function) to validate conditions off-chain before spending gas on-chain.</li>
 </ul>
 </td>
 <td width="50%" valign="top">
 <h3>🎲 Randomness Layer</h3>
 <ul>
 <li><b>Tamper-Proof:</b> Uses Chainlink VRF Direct Funding.</li>
-<li><b>Verifiable:</b> Proof of randomness is verified on-chain before the random number is accepted.</li>
+<li><b>Verifiable:</b> Proof of randomness is verified on-chain by the VRF Coordinator before fulfillment.</li>
 </ul>
 </td>
 </tr>
@@ -125,14 +143,14 @@ Raffle-Lottery-Foundry/
 <td width="50%" valign="top">
 <h3>🛠 Engineering Standards</h3>
 <ul>
-<li><b>Custom Errors:</b> Gas-optimized alternatives to require strings.</li>
-<li><b>Events:</b> Fully indexed events for subgraph/frontend integration.</li>
+<li><b>Custom Errors:</b> Gas-optimized alternatives to long require strings.</li>
+<li><b>Indexed Events:</b> Fully compatible with The Graph for frontend data fetching.</li>
 </ul>
 </td>
 <td width="50%" valign="top">
 <h3>🛡 Defense Mechanisms</h3>
 <ul>
-<li><b>Reentrancy Protection:</b> CEI Pattern implementation.</li>
+<li><b>Reentrancy Protection:</b> Strict CEI Pattern implementation.</li>
 <li><b>State Locking:</b> Prevents new players from joining while a winner is being calculated.</li>
 </ul>
 </td>
@@ -141,41 +159,40 @@ Raffle-Lottery-Foundry/
 
 ---
 
-## 🛡 Testing & Security
+## 🛡️ Security & Testing
 
 The project employs a **Test-Driven Development (TDD)** approach with a comprehensive Foundry suite.
 
-### 🧪 Testing Strategy
+### Testing Strategy
 
-* **Unit Tests:** Validate entrance fees, state transitions, and array recording.
-* **Mock Simulation:** Uses `VRFCoordinatorV2Mock` to simulate random number generation locally.
-* **Fuzz Testing:** Random input generation to ensure the contract handles unexpected data (e.g., 0 fees, massive arrays) without panicking.
-* **Invariant Analysis:** Ensures `contract balance` always equals `players * fee` during the open state.
+1. **Unit Tests:** Validate entrance fees, state transitions, and array recording.
+2. **Mock Simulation:** Uses `VRFCoordinatorV2Mock` to simulate random number generation locally on Anvil.
+3. **Fuzz Testing:** Random input generation to ensure the contract handles unexpected data (e.g., 0 fees, massive arrays).
+4. **Invariant Analysis:** Ensures `contract balance == players * fee` at all times during the `OPEN` state.
 
-### 🔒 Security Patterns
+### Security Patterns
 
-* **Checks-Effects-Interactions (CEI):** State is updated *before* external calls (ETH transfer) to prevent reentrancy.
-* **Atomic Transitions:** The contract locks immediately upon requesting randomness, ensuring no "sniping" occurs.
+* **Checks-Effects-Interactions (CEI):** State is updated *before* external calls (ETH transfer) to prevent reentrancy attacks.
+* **Atomic Transitions:** The contract locks immediately upon requesting randomness, ensuring no "sniping" or front-running occurs.
 
 ---
 
-## 🛠 Development Workflow
+## 🚀 Usage & Workflow
 
-This project utilizes a **Makefile** to streamline the development process. Instead of remembering complex Foundry commands, simply run the following shortcuts:
+This project utilizes a **Makefile** to streamline the development process.
 
 | Command | Description |
 | --- | --- |
 | **`make build`** | Compiles the smart contracts. |
 | **`make test`** | Runs the full unit test suite. |
-| **`make deploy`** | Deploys the contract to the configured network (Sepolia/Anvil). |
+| **`make deploy`** | Deploys the contract to the configured network. |
 | **`make anvil`** | Starts a local blockchain node for testing. |
-
 
 ---
 
-## 💡 Potential Use Cases
+## 💡 Use Cases
 
-This architecture is not limited to simple lotteries. It serves as a foundational blueprint for:
+This architecture serves as a foundational blueprint for broader Web3 applications:
 
 * 🎟️ **NFT Whitelisting:** Fairly selecting users for high-demand mints.
 * 🗳️ **DAO Governance:** Randomly selecting a sub-committee for dispute resolution.
@@ -190,30 +207,21 @@ This architecture is not limited to simple lotteries. It serves as a foundationa
 
 
 
-<img src="https://raw.githubusercontent.com/rajput2107/rajput2107/master/Assets/Developer.gif" width="60" />
+<b>Engineered by NEXTECHARHITECT</b>
+
+
+
+
+<i>Smart Contract Developer · Solidity · Foundry · Web3 Engineering</i>
 
 
 
 
 
-<h3>Engineered by NexTechArchitect</h3>
-<p><i>Smart Contract Development • Web3 Engineering • Solidity</i></p>
 
 
-
-
-<a href="https://github.com/NexTechArchitect">
-<img src="https://skillicons.dev/icons?i=github" height="40" />
-</a>
-&nbsp;&nbsp;
-<a href="https://linkedin.com/in/amit-kumar-811a11277">
-<img src="https://skillicons.dev/icons?i=linkedin" height="40" />
-</a>
-&nbsp;&nbsp;
-<a href="https://x.com/itZ_AmiT0">
-<img src="https://skillicons.dev/icons?i=twitter" height="40" />
-</a>
-
+<a href="https://github.com/NexTechArchitect">GitHub</a> •
+<a href="https://www.google.com/search?q=https://twitter.com/NexTechArchitect">Twitter</a>
 </div>
 
 ```
