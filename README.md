@@ -36,11 +36,11 @@
 ## 📑 Table of Contents
 
 - [🧠 Executive Summary](#-executive-summary)
-- [🏗️ System Architecture](#-system-architecture)
+- [🏗 System Architecture](#-system-architecture)
 - [⚙️ Core Logic & Modules](#-core-logic--modules)
 - [💎 Key Features](#-key-features)
-- [🛡️ Security & Testing](#-security--testing)
-- [🚀 Usage & Workflow](#-usage--workflow)
+- [🛡 Security & Testing](#-security--testing)
+- [🛠 Development Workflow](#-development-workflow)
 - [💡 Use Cases](#-use-cases)
 
 ---
